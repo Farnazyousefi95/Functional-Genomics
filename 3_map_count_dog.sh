@@ -42,9 +42,11 @@ mkdir -p $COUNTSD
 mkdir -p $RESULTSD
 
 ########## Prepare Reference Genome
+###It might have a problem in this step due to the file name( remember)
 cd $REFD
-cp /class_shared/Dog_Tasha_GCF_000002285.5/data/${REF}.fna .
-cp /class_shared/Dog_Tasha_GCF_000002285.5/data/${REF}.gff .
+cp /home/${MyID}/class_shared/Dog_Tasha_GCF_000002285.5/data/${REF}.fna .
+cp /home/${MyID}/class_shared/Dog_Tasha_GCF_000002285.5/data/${REF}.gff .
+
 
 ########## Convert Annotation and Extract Splice Sites/Exons
 gffread ${REF}.gff -T -o ${REF}.gtf
