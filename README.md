@@ -24,16 +24,33 @@ Summary Table of RNAseq Samples
 Below is a table of RNAseq samples selected for this study, sourced from BioProjects in the NCBI SRA database. All are liver tissue samples from healthy control dogs.
 
 
-| SRR | Project | Breed | Size | Class | Sex | Age | Group | Tissue |
-|-----|---------|-------|------|-------|-----|-----|-------|--------|
-|SRR8996966 | PRJNA396033 | Newfoundland | Large | Male | 11 | Liver|
+# Dog Liver Transcriptome Data
+
+This repository contains metadata for sequencing runs of dog liver transcriptomes from various projects and breeds. The table below summarizes the SRR (Sequence Read Archive) runs, associated BioProjects, breeds, size classes, sexes, ages, groups, and tissues.
+
+| SRR        | Project    | Breed                     | Size Class | Sex  | Age   | Group | Tissue |
+|------------|------------|---------------------------|------------|------|-------|-------|--------|
+| SRR8996966 | PRJNA396033| Newfoundland              | Large      | Male | 11    |       | Liver  |
+| SRR8997009 | PRJNA396033| Belgian Malinois          | Large      | Male | 3     |       | Liver  |
+| SRR5889337 | PRJNA396033| Labrador Retriever        | Large      | Male | 16    |       | Liver  |
+| SRR2960319 | PRJNA302374| Tibetan Mastiff           | Large      | Male | Adult |       | Liver  |
+| SRR8996977 | PRJNA396033| Yorkshire Terrier         | Small      | Male | 11    |       | Liver  |
+| DRR546744  | PRJDB18013 | Toy Poodle                | Small      | Male | 7     |       | Liver  |
+| DRR546790  | PRJDB18013 | Shih Tzu                  | Small      | Male | 11    |       | Liver  |
+| DRR546743  | PRJDB18013 | West Highland White Terrier | Small      | Male | 11    |       | Liver  |
+
+## Notes
+- **SRR/DRR**: Sequence Read Archive run accession numbers.
+- **Project**: BioProject accession numbers.
+- **Breed**: Dog breed for each sample.
+- **Size Class**: Size classification of the breed (Large or Small).
+- **Sex**: Sex of the dog (all samples are Male in this dataset).
+- **Age**: Age of the dog in years, or "Adult" if not specified numerically.
+- **Group**: Experimental group (not specified in this dataset).
+- **Tissue**: Tissue sampled (all samples are from the liver).
 
 
-
-
-
-
-Project Management Plan
+**Project Management Plan**
 Task Assignments
 All group members will contribute to coding, method development, and result interpretation, but primary responsibilities are assigned as follows:
 
