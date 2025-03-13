@@ -1,0 +1,2 @@
+# Functional-Genomics
+RNAseq codes
