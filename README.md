@@ -147,7 +147,7 @@ Monitor Progress:
 Check the job status with qstat -u aubclsd0338.
 
 Retrieve Results:
-After completion, find the count matrices (.csv) and stats files (.txt) in ${RESULTSD} (e.g., /home/[Your_ASC_ID]/DogRNAseq/Counts_H_S).
+After completion, find the count matrices .csv and stats files .txt in RESULTSD (e.g., /home/[Your_ASC_ID]/DogRNAseq/Counts_H_S).
 Copy these to your local computer using scp or a file transfer tool.
 Output Files
 Mapping Statistics: ${MAPD}/*_Stats.txt (e.g., SRR8996966_Stats.txt).
