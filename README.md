@@ -25,7 +25,7 @@ Below is a table of RNAseq samples selected for this study, sourced from BioProj
 
 
 | SRR | Project | Breed | Size | Class | Sex | Age | Group | Tissue |
- ----- --------- ------- ------- ------ ----  ----  ------- --------
+|-----|---------|-------|------|-------|-----|-----|-------|--------|
 
 
 
