@@ -110,8 +110,15 @@ May 2-5: Finalize manuscript and GitHub repository.
 May 5, 5 PM: Submit final manuscript.
 May 7: Complete group reflection survey.
 
+**1_download_fastqc.sh**
+Instructions to Run the Script:
 
-
+Save the script (e.g., as download_fastqc.sh).
+Replace [Your_ASC_ID] with your actual ASC ID.
+Make it executable: chmod +x download_fastqc.sh.
+Submit it to the ASC: run_script download_fastqc.sh.
+Monitor the job with qstat -u aubclsd0338
+This script will download the paired-end FASTQ files for all eight samples and generate FastQC reports, which you can then transfer to your local computer for review.
 
 
 **2_trim_fastqc_dog.sh**
