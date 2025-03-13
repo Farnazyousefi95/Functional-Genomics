@@ -50,7 +50,7 @@ This repository contains metadata for sequencing runs of dog liver transcriptome
 - **Tissue**: Tissue sampled (all samples are from the liver).
 
 
-**Project Management Plan**
+## Project Management Plan
 Task Assignments
 All group members will contribute to coding, method development, and result interpretation, but primary responsibilities are assigned as follows:
 
@@ -95,7 +95,7 @@ Lead: Anne Marie (GitHub: https://github.com/amk0121/LIVER_BIOL6850)
 Support: All members will upload annotated code and update the README.
 
 
-**Timeline for Project Completion**
+## Timeline for Project Completion
 March 10-15: Finalize sample selection, index the Tasha genome, and run the bioinformatic pipeline (e.g., trimming, alignment, counting).
 March 16-19: Generate count matrix and perform DESeq2 differential expression analysis.
 March 20-25: Run GSEA for KEGG pathways and IIS pathway.
@@ -110,8 +110,9 @@ May 2-5: Finalize manuscript and GitHub repository.
 May 5, 5 PM: Submit final manuscript.
 May 7: Complete group reflection survey.
 
-**1_download_fastqc.sh**
-Instructions to Run the Script:
+## 1_download_fastqc.sh
+
+**Instructions to Run the Script:**
 
 Save the script (e.g., as download_fastqc.sh).
 Replace [Your_ASC_ID] with your actual ASC ID.
@@ -121,8 +122,10 @@ Monitor the job with qstat -u aubclsd0338
 This script will download the paired-end FASTQ files for all eight samples and generate FastQC reports, which you can then transfer to your local computer for review.
 
 
-**2_trim_fastqc_dog.sh**
-How to Run the Script
+## 2_trim_fastqc_dog.sh
+
+**How to Run the Script**
+
 Save It: Save as trim_fastqc_dog.sh.
 Update MyID: Replace [Your_ASC_ID] with your ASC username.
 Make Executable: Run chmod +x trim_fastqc_dog.sh.
@@ -133,8 +136,10 @@ scp aubclsd0338@asax.asc.edu:/scratch/aubclsd0338/DogRNAseq/RawDataQuality/RawDa
 
 Review Quality: Unzip the tarball and open the HTML files to check the FastQC reports.
 
-**3_map_count_dog.sh**
-How to Run the Script
+## 3_map_count_dog.sh
+
+**How to Run the Script**
+
 Save the Script:
 Copy the script into a file named map_count_dog.sh.
 Update Your ID:
@@ -146,7 +151,8 @@ Run run_script map_count_dog.sh to submit it to SLURM.
 Monitor Progress:
 Check the job status with qstat -u aubclsd0338.
 
-Retrieve Results:
+**Retrieve Results:**
+
 After completion, find the count matrices .csv and stats files .txt in RESULTSD (e.g., /home/[Your_ASC_ID]/DogRNAseq/Counts_H_S).
 Copy these to your local computer using scp or a file transfer tool.
 Output Files
@@ -154,7 +160,8 @@ Mapping Statistics: ${MAPD}/*_Stats.txt (e.g., SRR8996966_Stats.txt).
 Count Files: ${COUNTSD}/*/. Each sample has a subdirectory with .gtf files.
 Count Matrices: ${RESULTSD}/*.csv (gene and transcript count matrices).
 
-Troubleshooting Tips:
+**Troubleshooting Tips:**
+
 File Extensions: If the genome or annotation files have different extensions (e.g., .fasta or .gff3), update the cp and gffread lines accordingly.
 Resource Limits: If the job fails due to memory or time, increase --mem (e.g., to 200G) or --time (e.g., to 24:00:00) in the SLURM directives.
 Module Versions: Confirm that the loaded module versions match those available on ASC.
@@ -166,23 +173,23 @@ Pathway Analysis: Perform Gene Set Enrichment Analysis (GSEA) to explore pathway
 
 
 
-**4_Deseq2_Dog**
+## 4_Deseq2_Dog
 
 1. Experimental Design
 Design Formula: Changed from ~treatment to ~BioProject + size. This accounts for batch effects (via BioProject) and compares gene expression between large and small breeds (size).
 Factor Levels: Updated to dds$size with levels "Small" (reference) and "Large", replacing the original "Ad_lib" and "Caloric_restriction".
-2. Input Files
+3. Input Files
 Count Data: Kept as gene_count_matrix.csv, assuming it’s the output from a previous step (e.g., prepDE.py3). Uncomment preprocessing lines if your file has extra columns (e.g., length).
 Metadata: Assumes PHENO_DATA.txt contains columns: sample (row names), size (Large/Small), and BioProject (e.g., PRJNA396033). Adjust the file name or structure if different.
 Annotation: Updated to dog_annotation.csv, which should map gene IDs to gene names or symbols for your dog genome.
-3. Visualizations
+4. Visualizations
 MA Plot Title: Updated to "DESeq2: Large vs Small Dog Breeds" for clarity.
 Plot Counts: Suggest replacing "YOUR_GENE_ID" with a gene of interest, like INSR (from the IIS pathway), relevant to your project.
 Heatmaps and PCA: Updated annotation to use size and BioProject instead of treatment and type.
-4. Output Files
+5. Output Files
 DGE Results: Changed to DGE_results_dog.csv to reflect your project.
 GSEA and Cytoscape Files: Kept the structure but updated to use your dog annotation file.
-5. Comments
+6. Comments
 Retained educational questions (e.g., "What does each column mean?") but tailored the context to your project where applicable.
 Prerequisites
 Metadata File (PHENO_DATA.txt): Create this file with columns sample, size, and BioProject. Example:
