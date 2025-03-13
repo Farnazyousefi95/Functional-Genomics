@@ -115,10 +115,15 @@ May 7: Complete group reflection survey.
 **Instructions to Run the Script:**
 
 Save the script (e.g., as download_fastqc.sh).
+
 Replace [Your_ASC_ID] with your actual ASC ID.
+
 Make it executable: chmod +x download_fastqc.sh.
+
 Submit it to the ASC: run_script download_fastqc.sh.
+
 Monitor the job with qstat -u aubclsd0338
+
 This script will download the paired-end FASTQ files for all eight samples and generate FastQC reports, which you can then transfer to your local computer for review.
 
 
@@ -127,11 +132,17 @@ This script will download the paired-end FASTQ files for all eight samples and g
 **How to Run the Script**
 
 Save It: Save as trim_fastqc_dog.sh.
+
 Update MyID: Replace [Your_ASC_ID] with your ASC username.
+
 Make Executable: Run chmod +x trim_fastqc_dog.sh.
+
 Submit the Job: Run run_script trim_fastqc_dog.sh.
+
 Check Progress: Use qstat -u aubclsd0338.
+
 Get Results: After it finishes, download the tarball:
+
 scp aubclsd0338@asax.asc.edu:/scratch/aubclsd0338/DogRNAseq/RawDataQuality/RawDataQuality.tar.gz ~/Desktop
 
 Review Quality: Unzip the tarball and open the HTML files to check the FastQC reports.
@@ -141,34 +152,53 @@ Review Quality: Unzip the tarball and open the HTML files to check the FastQC re
 **How to Run the Script**
 
 Save the Script:
+
 Copy the script into a file named map_count_dog.sh.
+
 Update Your ID:
+
 Replace [Your_ASC_ID] with your ASC username (e.g., aubtss).
+
 Make Executable:
+
 Run chmod +x map_count_dog.sh in your terminal.
+
 Submit the Job:
+
 Run run_script map_count_dog.sh to submit it to SLURM.
+
 Monitor Progress:
+
 Check the job status with qstat -u aubclsd0338.
 
 **Retrieve Results:**
 
 After completion, find the count matrices .csv and stats files .txt in RESULTSD (e.g., /home/[Your_ASC_ID]/DogRNAseq/Counts_H_S).
+
 Copy these to your local computer using scp or a file transfer tool.
+
 Output Files
+
 Mapping Statistics: ${MAPD}/*_Stats.txt (e.g., SRR8996966_Stats.txt).
+
 Count Files: ${COUNTSD}/*/. Each sample has a subdirectory with .gtf files.
+
 Count Matrices: ${RESULTSD}/*.csv (gene and transcript count matrices).
 
 **Troubleshooting Tips:**
 
 File Extensions: If the genome or annotation files have different extensions (e.g., .fasta or .gff3), update the cp and gffread lines accordingly.
+
 Resource Limits: If the job fails due to memory or time, increase --mem (e.g., to 200G) or --time (e.g., to 24:00:00) in the SLURM directives.
+
 Module Versions: Confirm that the loaded module versions match those available on ASC.
+
 Next Steps
+
 Once the script completes, use the count matrices (.csv) for downstream analysis, such as:
 
 Differential Expression: Analyze with DESeq2 in R to compare gene expression between conditions (e.g., large vs. small dog breeds).
+
 Pathway Analysis: Perform Gene Set Enrichment Analysis (GSEA) to explore pathways like IIS.
 
 
@@ -176,22 +206,39 @@ Pathway Analysis: Perform Gene Set Enrichment Analysis (GSEA) to explore pathway
 ## 4_Deseq2_Dog
 
 1. Experimental Design
+   
 Design Formula: Changed from ~treatment to ~BioProject + size. This accounts for batch effects (via BioProject) and compares gene expression between large and small breeds (size).
+
 Factor Levels: Updated to dds$size with levels "Small" (reference) and "Large", replacing the original "Ad_lib" and "Caloric_restriction".
+
 3. Input Files
+   
 Count Data: Kept as gene_count_matrix.csv, assuming it’s the output from a previous step (e.g., prepDE.py3). Uncomment preprocessing lines if your file has extra columns (e.g., length).
+
 Metadata: Assumes PHENO_DATA.txt contains columns: sample (row names), size (Large/Small), and BioProject (e.g., PRJNA396033). Adjust the file name or structure if different.
+
 Annotation: Updated to dog_annotation.csv, which should map gene IDs to gene names or symbols for your dog genome.
-4. Visualizations
+
+5. Visualizations
+   
 MA Plot Title: Updated to "DESeq2: Large vs Small Dog Breeds" for clarity.
+
 Plot Counts: Suggest replacing "YOUR_GENE_ID" with a gene of interest, like INSR (from the IIS pathway), relevant to your project.
+
 Heatmaps and PCA: Updated annotation to use size and BioProject instead of treatment and type.
-5. Output Files
+
+7. Output Files
+   
 DGE Results: Changed to DGE_results_dog.csv to reflect your project.
+
 GSEA and Cytoscape Files: Kept the structure but updated to use your dog annotation file.
-6. Comments
+
+9. Comments
+    
 Retained educational questions (e.g., "What does each column mean?") but tailored the context to your project where applicable.
+
 Prerequisites
+
 Metadata File (PHENO_DATA.txt): Create this file with columns sample, size, and BioProject. Example:
 
 | sample     | size  | BioProject  |
@@ -201,8 +248,13 @@ Metadata File (PHENO_DATA.txt): Create this file with columns sample, size, and 
 | DRR546744  | Small | PRJDB18013  |
 
 Count Matrix (gene_count_matrix.csv): Ensure sample names match PHENO_DATA.txt.
+
 Annotation File (dog_annotation.csv): Should have a gene_id column matching your count matrix and a Name column with gene symbols.
+
 *Next Steps* 
+
 Run the Script: Execute in R or RStudio after setting the working directory and preparing input files.
+
 Check Results: Look for differentially expressed genes related to the IIS pathway (e.g., INSR, IGF1) in DGE_results_dog.csv.
+
 Downstream Analysis: Use DGErankName.rnk for GSEA to test pathway enrichment and NormTransExp_Anno_Names.txt for Cytoscape visualization.
