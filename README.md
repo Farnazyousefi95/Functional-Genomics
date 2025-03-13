@@ -140,17 +140,11 @@ GSEA and Cytoscape Files: Kept the structure but updated to use your dog annotat
 Retained educational questions (e.g., "What does each column mean?") but tailored the context to your project where applicable.
 Prerequisites
 Metadata File (PHENO_DATA.txt): Create this file with columns sample, size, and BioProject. Example:
-text
-
-Collapse
-
-Wrap
-
-Copy
-sample      size  BioProject
-SRR8996966  Large PRJNA396033
-SRR8996977  Small PRJNA396033
-DRR546744   Small PRJDB18013
+| sample | size | BioProject |
+|--------|------|------------|
+| SRR8996966 | Large | PRJNA396033 |
+| SRR8996977 | Small | PRJNA396033 |
+| DRR546744 | Small | PRJDB18013 |
 
 Count Matrix (gene_count_matrix.csv): Ensure sample names match PHENO_DATA.txt.
 Annotation File (dog_annotation.csv): Should have a gene_id column matching your count matrix and a Name column with gene symbols.
