@@ -114,7 +114,17 @@ May 7: Complete group reflection survey.
 
 
 
+**2_trim_fastqc_dog.sh**
+How to Run the Script
+Save It: Save as trim_fastqc_dog.sh.
+Update MyID: Replace [Your_ASC_ID] with your ASC username.
+Make Executable: Run chmod +x trim_fastqc_dog.sh.
+Submit the Job: Run run_script trim_fastqc_dog.sh.
+Check Progress: Use squeue -u ${MyID} to monitor.
+Get Results: After it finishes, download the tarball:
+scp aubclsd0338@asax.asc.edu:/scratch/aubclsd0338/DogRNAseq/RawDataQuality/RawDataQuality.tar.gz ~/Desktop
 
+Review Quality: Unzip the tarball and open the HTML files to check the FastQC reports.
 
 
 
