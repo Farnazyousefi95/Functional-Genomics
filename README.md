@@ -109,3 +109,52 @@ May 1: Deliver group presentation.
 May 2-5: Finalize manuscript and GitHub repository.
 May 5, 5 PM: Submit final manuscript.
 May 7: Complete group reflection survey.
+
+
+
+
+
+
+
+
+
+
+
+***4_Deseq2_Dog***
+
+1. Experimental Design
+Design Formula: Changed from ~treatment to ~BioProject + size. This accounts for batch effects (via BioProject) and compares gene expression between large and small breeds (size).
+Factor Levels: Updated to dds$size with levels "Small" (reference) and "Large", replacing the original "Ad_lib" and "Caloric_restriction".
+2. Input Files
+Count Data: Kept as gene_count_matrix.csv, assuming it’s the output from a previous step (e.g., prepDE.py3). Uncomment preprocessing lines if your file has extra columns (e.g., length).
+Metadata: Assumes PHENO_DATA.txt contains columns: sample (row names), size (Large/Small), and BioProject (e.g., PRJNA396033). Adjust the file name or structure if different.
+Annotation: Updated to dog_annotation.csv, which should map gene IDs to gene names or symbols for your dog genome.
+3. Visualizations
+MA Plot Title: Updated to "DESeq2: Large vs Small Dog Breeds" for clarity.
+Plot Counts: Suggest replacing "YOUR_GENE_ID" with a gene of interest, like INSR (from the IIS pathway), relevant to your project.
+Heatmaps and PCA: Updated annotation to use size and BioProject instead of treatment and type.
+4. Output Files
+DGE Results: Changed to DGE_results_dog.csv to reflect your project.
+GSEA and Cytoscape Files: Kept the structure but updated to use your dog annotation file.
+5. Comments
+Retained educational questions (e.g., "What does each column mean?") but tailored the context to your project where applicable.
+Prerequisites
+Metadata File (PHENO_DATA.txt): Create this file with columns sample, size, and BioProject. Example:
+text
+
+Collapse
+
+Wrap
+
+Copy
+sample      size  BioProject
+SRR8996966  Large PRJNA396033
+SRR8996977  Small PRJNA396033
+DRR546744   Small PRJDB18013
+
+Count Matrix (gene_count_matrix.csv): Ensure sample names match PHENO_DATA.txt.
+Annotation File (dog_annotation.csv): Should have a gene_id column matching your count matrix and a Name column with gene symbols.
+*Next Steps* 
+Run the Script: Execute in R or RStudio after setting the working directory and preparing input files.
+Check Results: Look for differentially expressed genes related to the IIS pathway (e.g., INSR, IGF1) in DGE_results_dog.csv.
+Downstream Analysis: Use DGErankName.rnk for GSEA to test pathway enrichment and NormTransExp_Anno_Names.txt for Cytoscape visualization.
