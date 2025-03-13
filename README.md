@@ -95,7 +95,7 @@ Lead: Anne Marie (GitHub: https://github.com/amk0121/LIVER_BIOL6850)
 Support: All members will upload annotated code and update the README.
 
 
-Timeline for Project Completion
+**Timeline for Project Completion**
 March 10-15: Finalize sample selection, index the Tasha genome, and run the bioinformatic pipeline (e.g., trimming, alignment, counting).
 March 16-19: Generate count matrix and perform DESeq2 differential expression analysis.
 March 20-25: Run GSEA for KEGG pathways and IIS pathway.
@@ -127,13 +127,42 @@ Save It: Save as trim_fastqc_dog.sh.
 Update MyID: Replace [Your_ASC_ID] with your ASC username.
 Make Executable: Run chmod +x trim_fastqc_dog.sh.
 Submit the Job: Run run_script trim_fastqc_dog.sh.
-Check Progress: Use squeue -u ${MyID} to monitor.
+Check Progress: Use qstat -u aubclsd0338.
 Get Results: After it finishes, download the tarball:
 scp aubclsd0338@asax.asc.edu:/scratch/aubclsd0338/DogRNAseq/RawDataQuality/RawDataQuality.tar.gz ~/Desktop
 
 Review Quality: Unzip the tarball and open the HTML files to check the FastQC reports.
 
+**3_map_count_dog.sh**
+How to Run the Script
+Save the Script:
+Copy the script into a file named map_count_dog.sh.
+Update Your ID:
+Replace [Your_ASC_ID] with your ASC username (e.g., aubtss).
+Make Executable:
+Run chmod +x map_count_dog.sh in your terminal.
+Submit the Job:
+Run run_script map_count_dog.sh to submit it to SLURM.
+Monitor Progress:
+Check the job status with qstat -u aubclsd0338.
 
+Retrieve Results:
+After completion, find the count matrices (.csv) and stats files (.txt) in ${RESULTSD} (e.g., /home/[Your_ASC_ID]/DogRNAseq/Counts_H_S).
+Copy these to your local computer using scp or a file transfer tool.
+Output Files
+Mapping Statistics: ${MAPD}/*_Stats.txt (e.g., SRR8996966_Stats.txt).
+Count Files: ${COUNTSD}/*/. Each sample has a subdirectory with .gtf files.
+Count Matrices: ${RESULTSD}/*.csv (gene and transcript count matrices).
+
+Troubleshooting Tips:
+File Extensions: If the genome or annotation files have different extensions (e.g., .fasta or .gff3), update the cp and gffread lines accordingly.
+Resource Limits: If the job fails due to memory or time, increase --mem (e.g., to 200G) or --time (e.g., to 24:00:00) in the SLURM directives.
+Module Versions: Confirm that the loaded module versions match those available on ASC.
+Next Steps
+Once the script completes, use the count matrices (.csv) for downstream analysis, such as:
+
+Differential Expression: Analyze with DESeq2 in R to compare gene expression between conditions (e.g., large vs. small dog breeds).
+Pathway Analysis: Perform Gene Set Enrichment Analysis (GSEA) to explore pathways like IIS.
 
 
 
