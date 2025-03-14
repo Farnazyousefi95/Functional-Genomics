@@ -126,6 +126,9 @@ Monitor the job with qstat -u aubclsd0338
 
 This script will download the paired-end FASTQ files for all eight samples and generate FastQC reports, which you can then transfer to your local computer for review.
 
+scpaubclsd0338@asax.asc.edu:/scratch/aubclsd0338/DogRNAseq/RawDataQuality/RawDataQuality.tar.gz ~/Desktop
+
+Review Quality: Unzip the tarball and open the HTML files to check the FastQC reports.
 
 ## 2_trim_fastqc_dog.sh
 
@@ -143,9 +146,7 @@ Check Progress: Use qstat -u aubclsd0338.
 
 Get Results: After it finishes, download the tarball:
 
-scp aubclsd0338@asax.asc.edu:/scratch/aubclsd0338/DogRNAseq/RawDataQuality/RawDataQuality.tar.gz ~/Desktop
-
-Review Quality: Unzip the tarball and open the HTML files to check the FastQC reports.
+scpaubclsd0338@asax.asc.edu:/scratch/aubclsd0338/DogRNAseq/PostCleanQuality/PostCleanQuality.tar.gz ~/Desktop
 
 ## 3_map_count_dog.sh
 
