@@ -124,28 +124,60 @@ pheatmap(sampleDistMatrix, clustering_distance_rows = sampleDists,
 plotPCA(rld, intgroup = c("size", "BioProject"))
 
 ############ Preparing Data for GSEA and Cytoscape #############
+# Load the GTF file
+gtf <- read.table("genomic.gtf", sep="\t", header=FALSE, quote="", stringsAsFactors=FALSE)
+
+# Filter for gene lines
+genes <- gtf[gtf$V3 == "gene", ]
+
+# Check the first few entries of the 9th column
+head(genes$V9)
+
+install.packages("stringr")
+library(stringr)
+
+genes$gene_id <- str_extract(genes$V9, '(?<=gene_id ")[^"]+')
+genes$gene_name <- str_extract(genes$V9, '(?<=gene ")[^"]+')
+genes$full_id <- paste0("gene-", genes$gene_id, "|", genes$gene_name)
+genes$gene_name <- ifelse(is.na(genes$gene_name), genes$gene_id, genes$gene_name)
+dog_annotation <- genes[, c("full_id", "gene_name")]
+colnames(dog_annotation) <- c("gene_id", "gene_name")
+write.csv(dog_annotation, "dog_annotation.csv", row.names=FALSE)
 
 ### Merge DGE results with annotation
 Anno <- read.csv("dog_annotation.csv", stringsAsFactors = FALSE, na.strings = c(""))
 DGEresults <- read.csv("DGE_results_dog.csv", stringsAsFactors = FALSE)
 names(DGEresults)[1] <- "gene_id"
-DGE_Anno <- merge(Anno, DGEresults, by = "gene_id", all.y = FALSE)
+DGE_Anno <- merge(Anno, DGEresults, by = "gene_id", all.y = TRUE)
 dim(DGE_Anno)
 summary(DGE_Anno)
 
-### Create ranked list for GSEA
-DGE_Anno_Rank <- within(DGE_Anno, rank <- sign(log2FoldChange) * -log10(pvalue))
-DGErank <- subset(DGE_Anno_Rank, select = c("Name", "rank"))
-DGErank_withName <- na.omit(DGErank)
-write.table(DGErank_withName, file = "DGErankName.rnk", quote = FALSE,
-            row.names = FALSE, sep = "\t")
 
-### Normalized Expression Data
-nt <- normTransform(dds)
-NormTransExp <- assay(nt)
-gene_id <- rownames(NormTransExp)
-NormTransExpIDs <- cbind(gene_id, NormTransExp)
-NormTransExp_Anno <- merge(Anno, NormTransExpIDs, by = "gene_id", all.y = FALSE)
-NormTransExp_Anno_withName <- na.omit(NormTransExp_Anno)
+# Create the rank column
+DGE_Anno_Rank <- within(DGE_Anno, rank <- sign(log2FoldChange) * -log10(pvalue))
+
+# Select gene_name and rank columns
+DGErank <- DGE_Anno_Rank[, c("gene_name", "rank")]
+
+# Remove rows with NA in rank
+DGErank <- na.omit(DGErank)
+
+# Sort by rank in descending order (optional but recommended for GSEA)
+DGErank <- DGErank[order(DGErank$rank, decreasing = TRUE), ]
+
+# Write to a file for GSEA
+write.table(DGErank, file = "DGErank_for_GSEA.txt", sep = "\t", quote = FALSE, row.names = FALSE)
+
+
+# Load DESeq2
+library(DESeq2)
+
+# Normalized Expression Data
+nt <- normTransform(dds)  # Transform the counts
+NormTransExp <- assay(nt)  # Extract the normalized data
+gene_id <- rownames(NormTransExp)  # Get gene IDs
+NormTransExpIDs <- cbind(gene_id, NormTransExp)  # Combine IDs with data
+NormTransExp_Anno <- merge(Anno, NormTransExpIDs, by = "gene_id", all.y = FALSE)  # Merge with annotations
+NormTransExp_Anno_withName <- na.omit(NormTransExp_Anno)  # Remove rows with NA
 write.table(NormTransExp_Anno_withName, file = "NormTransExp_Anno_Names.txt",
-            quote = FALSE, row.names = FALSE, sep = "\t")
+            quote = FALSE, row.names = FALSE, sep = "\t")  # Write to file
